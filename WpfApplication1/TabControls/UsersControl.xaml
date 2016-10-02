@@ -1,0 +1,29 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1.TabControls"
+             xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
+            x:Class="WpfApplication1.TabControls.UsersControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <TabControl Custom:TabControlHelper.IsUnderlined="True" >
+        <TabItem Header="Active">
+            <Grid Background="Transparent"></Grid>
+        </TabItem>
+        <TabItem Header="Invited">
+            <Grid Background="Transparent"></Grid>
+        </TabItem>
+        <TabItem Header="Disabled">
+            <Grid Background="Transparent"></Grid>
+        </TabItem>
+        <TabItem Header="Recent">
+            <Grid Background="Transparent"></Grid>
+        </TabItem>
+        <TabItem Header="Client">
+            <Grid Background="Transparent"></Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>
