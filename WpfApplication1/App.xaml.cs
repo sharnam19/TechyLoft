@@ -1,4 +1,5 @@
-﻿using MahApps.Metro;
+﻿using Firebase.Database;
+using MahApps.Metro;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfApplication1.Models;
-
 namespace WpfApplication1
 {
     /// <summary>
@@ -16,8 +16,12 @@ namespace WpfApplication1
     /// </summary>
     public partial class App : Application
     {
+        public static FirebaseClient root = new FirebaseClient("https://dazzling-heat-1022.firebaseio.com/");
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            
+            
             // get the current app style (theme and accent) from the application
             // you can then use the current theme and custom accent instead set a new theme
             Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
@@ -30,5 +34,7 @@ namespace WpfApplication1
 
             base.OnStartup(e);
         }
+        
+
     }
 }

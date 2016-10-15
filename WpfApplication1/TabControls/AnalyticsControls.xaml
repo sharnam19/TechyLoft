@@ -9,13 +9,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="Hours Spent">
+        <TabItem Header="Hours Spent" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Tasks Report">
+        <TabItem Header="Tasks Report" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Weekly Usage">
+        <TabItem Header="Weekly Usage" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
     </TabControl>

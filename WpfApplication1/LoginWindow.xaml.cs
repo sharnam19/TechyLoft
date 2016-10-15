@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
+using System.Security.Cryptography;
 using Firebase.Database;
 using Firebase.Database.Query;
 using WpfApplication1.Models;
@@ -16,11 +17,12 @@ namespace WpfApplication1
     /// </summary>
     public partial class LoginWindow: MetroWindow
     {
+        private ChildQuery path; 
         public LoginWindow()
         {
+            path = App.root.Child("users");
             InitializeComponent();
             setup();
-            //getData();
         }
         public void setup()
         {
@@ -76,8 +78,7 @@ namespace WpfApplication1
                 passwordBlock.Foreground = Brushes.White;
             }
             if (allTrue) { 
-                var client = new FirebaseClient("https://dazzling-heat-1022.firebaseio.com/");
-                var users = await client.Child("users").OrderBy("id").EqualTo(UsernameBox.Text).LimitToFirst(1).OnceAsync<User>();
+                var users = await path.OrderBy("id").EqualTo(UsernameBox.Text).LimitToFirst(1).OnceAsync<User>();
                 if (users.Count==0)
                 {
                     Console.WriteLine("No Such User Exists");
@@ -91,12 +92,10 @@ namespace WpfApplication1
                             LoggedInWindow Window = new LoggedInWindow(user.Object);
                             Window.Show();
                             this.Close();
-                        }else
-                        {
+                        }else{
                             Console.WriteLine("Passwords Dont Match");
                         }
                     }
-                
                 }
             }else
             {
@@ -170,25 +169,23 @@ namespace WpfApplication1
             }            
             if (allTrue)
             {
-                var user = new User()
-                {
-                    name=fullnameBox.Text,
-                    id=usernameRegBox.Text,
-                    dob=dobPicker.Text,
-                    password=passwordRegBox.Password,
-                    gender=val
-                };
-                var client = new FirebaseClient("https://dazzling-heat-1022.firebaseio.com/");
-                var users= await client.Child("users").OrderBy("id").EqualTo(user.id).OnceAsync<User>();
+                
+                var users= await path.OrderBy("id").EqualTo(fullnameBox.Text).OnceAsync<User>();
                 if (users.Count > 0)
                 {
                     Console.WriteLine("User ALready Exists");
-                }else
-                {
+                }else{
+                    var user = new User()
+                    {
+                        name = fullnameBox.Text,
+                        id = usernameRegBox.Text,
+                        dob = dobPicker.Text,
+                        password = passwordRegBox.Password,
+                        gender = val
+                    };
                     Console.WriteLine("All PAss");
-                    await client.Child("users").PostAsync<User>(user);
-                    LoggedInWindow Window = new LoggedInWindow(user);
-                    Window.Show();
+                    await path.PostAsync<User>(user);
+                    (new LoggedInWindow(user)).Show();
                     this.Close();
                 }
             }else

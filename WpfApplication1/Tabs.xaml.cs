@@ -1,6 +1,7 @@
-﻿using System;
+﻿using MahApps.Metro;
+using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +15,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApplication1.TabControls
+namespace WpfApplication1
 {
     /// <summary>
-    /// Interaction logic for UsersControl.xaml
+    /// Interaction logic for Tabs.xaml
     /// </summary>
-    public partial class UsersControl : UserControl
+    public partial class Tabs : TabItem
     {
-        public ObservableCollection<Modules> mods{ get; private set; }
-        public UsersControl()
+        public Tabs()
         {
-            mods = new ObservableCollection<Modules>();
-            InitializeComponent();
+            InitializeComponent();  
         }
+
     }
 }

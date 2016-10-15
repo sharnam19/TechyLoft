@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApplication1.View">
+    <DataTemplate x:Key="ModuleView">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="ModuleName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="0" FontSize="13" FontWeight="Bold" Text="Connector"/>
+            <TextBlock x:Name="ProjectName" Margin="10" Text="Downloader" Foreground="White" TextAlignment="Center" Grid.Row="1" FontSize="13" FontWeight="Bold"/>
+            <TextBlock x:Name="Type" Margin="10" Text="Data" Foreground="White" TextAlignment="Center" Grid.Row="2" FontSize="13" FontWeight="Bold"/>
+            <TextBlock x:Name="UserName" Margin="10" Text="Sharnam19.nc@gmail.com" Foreground="White" TextAlignment="Center" Grid.Row="3" FontSize="13" FontWeight="Bold"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

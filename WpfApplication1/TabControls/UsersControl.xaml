@@ -4,26 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApplication1.TabControls"
+            xmlns:local2="clr-namespace:WpfApplication1"
              xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
             x:Class="WpfApplication1.TabControls.UsersControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="Active">
+        <TabItem Header="Active" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Invited">
+        <TabItem Header="Invited" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Disabled">
+        <TabItem Header="Disabled" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Recent">
+        <TabItem Header="Recent" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Client">
+        <TabItem Header="Client" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
+        <local2:Tabs Header="Local"/>
     </TabControl>
 </UserControl>

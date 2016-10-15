@@ -9,10 +9,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="Team">
+        <TabItem Header="Team" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="General">
+        <TabItem Header="General" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
     </TabControl>

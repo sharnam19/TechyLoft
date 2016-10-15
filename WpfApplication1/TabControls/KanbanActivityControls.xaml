@@ -4,22 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApplication1.TabControls"
+             xmlns:l2="clr-namespace:WpfApplication1"
              xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApplication1.TabControls.KanbanActivityControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ModuleView">
+            <Grid Background="#CF000000" Margin="15 10" MinHeight="150" MinWidth="200" MaxWidth="200" MaxHeight="150" Cursor="Hand" ToolTip="View Documentation" MouseLeftButtonDown="ClickHandler" MouseRightButtonDown="ClickHandler">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="ModuleName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="0" FontSize="13" FontWeight="Bold" Text="{Binding name}" />
+                <TextBlock x:Name="ProjectName" Margin="10"  Foreground="White" TextAlignment="Center" Grid.Row="1" FontSize="13" FontWeight="Bold" Text="{Binding project}"/>
+                <TextBlock x:Name="Type" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="2" FontSize="13" FontWeight="Bold" Text="{Binding type}"/>
+                <TextBlock x:Name="UserName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="3" FontSize="13" FontWeight="Bold" Text="{Binding user_id}"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="New">
-            <Grid Background="Transparent"></Grid>
+        <TabItem Header="New" Padding="15 0" Name="newTab">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding newmod, IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
-        <TabItem Header="In Progress">
-            <Grid Background="Transparent"></Grid>
+        <TabItem Header="In Progress" Padding="15 0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding inprogress,  IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
-        <TabItem Header="Resolved">
-            <Grid Background="Transparent"></Grid>
+        <TabItem Header="Resolved" Padding="15 0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding resolved, IsAsync=True,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
-        <TabItem Header="Closed">
-            <Grid Background="Transparent"></Grid>
+        <TabItem Header="Closed" Padding="15 0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding closed, IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

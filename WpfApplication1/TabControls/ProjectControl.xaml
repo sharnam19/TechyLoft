@@ -9,19 +9,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="All" >
+        <TabItem Header="All" Padding="15 0" >
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Starred" >
+        <TabItem Header="Starred" Padding="15 0" >
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="On Hold" >
+        <TabItem Header="On Hold" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Stack">
+        <TabItem Header="Stack" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Completed">
+        <TabItem Header="Completed" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
     </TabControl>

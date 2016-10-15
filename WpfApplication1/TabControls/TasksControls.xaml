@@ -9,19 +9,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="All">
+        <TabItem Header="All" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="My Tasks">
+        <TabItem Header="My Tasks" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="Overdue">
+        <TabItem Header="Overdue" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="High Priority">
+        <TabItem Header="High Priority" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
-        <TabItem Header="All Opened">
+        <TabItem Header="All Opened" Padding="15 0">
             <Grid Background="Transparent"></Grid>
         </TabItem>
     </TabControl>

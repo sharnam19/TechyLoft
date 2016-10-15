@@ -13,5 +13,14 @@ namespace WpfApplication1.Models
         public string name { get; set; }
         public string parameters { get; set; }
         public string returntype { get; set; }
+        private string key;
+        public string getKey()
+        {
+            return key;
+        }
+        public void setKey(string key)
+        {
+            this.key = key;
+        }
     }
 }

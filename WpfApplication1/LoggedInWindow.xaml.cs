@@ -15,6 +15,8 @@ using MahApps.Metro.Controls;
 using WpfApplication1.Models;
 using WpfApplication1.TabControls;
 using System.Windows.Navigation;
+using Firebase.Database.Query;
+using Firebase.Database;
 
 namespace WpfApplication1
 {
@@ -25,6 +27,7 @@ namespace WpfApplication1
     {
         private User user;
         private ActiveTab activeTab;
+        private FirebaseClient path;
 
         enum ActiveTab
         {
@@ -39,6 +42,7 @@ namespace WpfApplication1
 
         public LoggedInWindow(User user)
         {
+            path = App.root;
             this.user = user;
             InitializeComponent();
             this.Title = "Welcome " + user.name + " to TechyLoft!";
@@ -57,8 +61,54 @@ namespace WpfApplication1
             }
         }
 
+        private void New_Button(object sender, RoutedEventArgs e)
+        {
+            (sender as Button).ContextMenu.IsEnabled = true;
+            (sender as Button).ContextMenu.PlacementTarget = (sender as Button);
+            (sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            (sender as Button).ContextMenu.IsOpen = true;
+        }
+
+        private ActiveTab get_tab(Button button)
+        {
+            Button[] buttons = { DashboardButton, ProjectsButton, TasksButton, UsersButton, KanbanActivityButton, GroupThreadsButton, AnalyticsButton };
+            int i = 0;
+            while(i<buttons.Length && !buttons[i].Equals(button))
+                i++;
+            return (ActiveTab)i;
+        }
+
         private void TabButton_Click(object sender, RoutedEventArgs e)
         {
+            ActiveTab tab = get_tab((Button)sender);
+            if (activeTab != tab)
+            {
+                this.activeTab = tab;
+                switch (tab)
+                {
+                    case ActiveTab.Dashboard:
+                        this.ContentController.Content = new DashboardControl();
+                        break;
+                    case ActiveTab.Projects:
+                        this.ContentController.Content = new ProjectControl();
+                        break;
+                    case ActiveTab.Tasks:
+                        this.ContentController.Content = new TasksControls();
+                        break;
+                    case ActiveTab.Users:
+                        this.ContentController.Content = new UsersControl();
+                        break;
+                    case ActiveTab.KanbanActivity:
+                        this.ContentController.Content = new KanbanActivityControls();
+                        break;
+                    case ActiveTab.GroupThread:
+                        this.ContentController.Content = new GroupThreadsControls();
+                        break;
+                    case ActiveTab.Analytics:
+                        this.ContentController.Content = new AnalyticsControls();
+                        break;
+                }
+            }
             if (e.OriginalSource == DashboardButton)
             {
                 if (activeTab != ActiveTab.Dashboard)
@@ -115,7 +165,18 @@ namespace WpfApplication1
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
+            (new LoginWindow()).Show();
             this.Close();
+        }
+
+        private void Create_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(((TextBlock)sender).Text.Equals("Project"))
+            {
+                Console.WriteLine("Project Created"); 
+            }else if(((TextBlock)sender).Text.Equals("User")){
+                Console.WriteLine("User Created");
+            }
         }
     }
 }

@@ -27,17 +27,24 @@
                 </Grid.ColumnDefinitions>
                 <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Hidden">
                     <StackPanel Margin="20,20,20,20">
-                        <Button  Height="60" Margin="0,0,0,50" x:Name="NewButton" Content="New"/>
-                        <Button Height="40" Margin="0,0,0,20" x:Name="DashboardButton" Content="Dashboard" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
-                        <Button Height="40" Margin="0,0,0,20" x:Name="ProjectsButton" Content="Projects" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
-                        <Button Height="40" Margin="0,0,0,20" x:Name="TasksButton" Content="Tasks" Click="TabButton_Click"  Style="{StaticResource MyMetroButton}"/>
-                        <Button Height="40" Margin="0,0,0,20" x:Name="UsersButton" Content="Users" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
-                        <Button Height="40" Margin="0,0,0,20" x:Name="KanbanActivityButton" Content="Kanban Activity" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
-                        <Button Height="40" Margin="0,0,0,20" x:Name="GroupThreadsButton" Content="Group Threads" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
-                        <Button Height="40" Margin="0,0,0,20" x:Name="AnalyticsButton" Content="Analytics" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
+
+                        <Controls:DropDownButton Content="New" Height="60" Margin="0,0,0,50" Background="Transparent" FontSize="15" FontWeight="Bold" Controls:ControlsHelper.CornerRadius="3" BorderBrush="#CC119EDA">
+                            <Controls:DropDownButton.Items>
+                                <TextBlock Text="Project" FontSize="15" FontWeight="Bold" MouseLeftButtonUp="Create_Click"/>
+                                <TextBlock Text="User" FontSize="15" FontWeight="Bold" MouseLeftButtonUp="Create_Click"/>
+                            </Controls:DropDownButton.Items>
+                        </Controls:DropDownButton>
+                        
+                        <Button x:Name="DashboardButton" Content="Dashboard" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
+                        <Button x:Name="ProjectsButton" Content="Projects" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
+                        <Button x:Name="TasksButton" Content="Tasks" Click="TabButton_Click"  Style="{StaticResource MyMetroButton}"/>
+                        <Button x:Name="UsersButton" Content="Users" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
+                        <Button x:Name="KanbanActivityButton" Content="Kanban Activity" Click="TabButton_Click" Style="{StaticResource MyMetroButton}" />
+                        <Button x:Name="GroupThreadsButton" Content="Group Threads" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
+                        <Button x:Name="AnalyticsButton" Content="Analytics" Click="TabButton_Click" Style="{StaticResource MyMetroButton}"/>
                     </StackPanel>
                 </ScrollViewer>
-                <Button Background="#CC119EDA" Height="40" Margin="20" x:Name="LogoutButton" Content="Logout" Grid.Row="1" Click="LogoutButton_Click"/>
+                <Button Height="40" Margin="20" x:Name="LogoutButton" Content="Logout" Grid.Row="1" Click="LogoutButton_Click" Style="{StaticResource LogoutButton}"/>
             </Grid>
         </Border>
         <ContentControl Name="ContentController" Grid.Column="1" Margin="20"/>
