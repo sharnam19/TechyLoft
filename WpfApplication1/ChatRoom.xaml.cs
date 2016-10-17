@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,30 +35,35 @@ namespace WpfApplication1
             path = App.root.Child("chatrooms").Child(header);
             messages = new AsyncObservableCollection<Message>();
             Header = header;
-            getMessage(header);
+            getMessages();
         }
-
+        
         ~ChatRoom()
         {
-            observable.Dispose();
+            //Console.WriteLine("Destroying Chatroom");
             path.Dispose();
         }
-
-        private void getMessage(string header)
+        private void getMessages()
         {
             observable = path.OrderByKey().LimitToLast(50).AsObservable<Message>().Subscribe(d =>
             {
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
-                    Console.WriteLine("Ye Message aya hai bhai log: "+d.Object.content);
+                    //Console.WriteLine("Ye Message aya hai bhai log: " + d.Object.content);
                     messages.Add(d.Object);
                 }));
             });
-        }
+        }       
 
         private async void send(Message message)
         {
             await path.PostAsync<Message>(message);
+        }
+
+        private void Refresh(object sender,RoutedEventArgs e)
+        {
+            observable.Dispose();
+            getMessages();
         }
 
         private void Send(object sender, RoutedEventArgs e)

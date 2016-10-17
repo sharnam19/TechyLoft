@@ -38,9 +38,20 @@
         </DataTemplate>
     </UserControl.Resources>
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="New" Padding="15 0" Name="newTab">
+        <TabItem Header="All" Padding="15 0" Name="newTab">
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding newmod, IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                <ItemsControl ItemsSource="{Binding collections[0], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="New" Padding="15 0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[1], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
@@ -51,7 +62,7 @@
         </TabItem>
         <TabItem Header="In Progress" Padding="15 0">
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding inprogress,  IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                <ItemsControl ItemsSource="{Binding collections[2],  IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -62,7 +73,7 @@
         </TabItem>
         <TabItem Header="Resolved" Padding="15 0">
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding resolved, IsAsync=True,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                <ItemsControl ItemsSource="{Binding collections[3], IsAsync=True,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -73,7 +84,7 @@
         </TabItem>
         <TabItem Header="Closed" Padding="15 0">
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding closed, IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
+                <ItemsControl ItemsSource="{Binding collections[4], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ItemTemplate="{StaticResource ModuleView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>

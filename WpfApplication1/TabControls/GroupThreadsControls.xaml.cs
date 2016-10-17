@@ -49,6 +49,6 @@ namespace WpfApplication1.TabControls
                 }
             }));
         }
-        
+
     }
 }

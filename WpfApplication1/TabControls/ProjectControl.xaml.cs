@@ -23,121 +23,61 @@ namespace WpfApplication1.TabControls
     /// </summary>
     public partial class ProjectControl : UserControl
     {
-
-        /*public ObservableCollection<Projects> all { get; private set; }
-        public ObservableCollection<Projects> starred { get; private set; }
-        public ObservableCollection<Projects> onHold { get; private set; }
-        public ObservableCollection<Projects> stack { get; private set; }
-        public ObservableCollection<Projects> completed { get; private set; }
-        */
-
-        public ObservableCollection<Projects>[] collections { get; set; }
-        private Dictionary<string,Projects>[] dictionaries { get; set; }
-
-        /*private Dictionary<string, Projects> allMap;
-        private Dictionary<string, Projects> starredMap;
-        private Dictionary<string, Projects> onHoldMap;
-        private Dictionary<string, Projects> stackMap;
-        private Dictionary<string, Projects> completedMap;
-        */
+        
+        public static ObservableCollection<Projects>[] collections { get; set; }
+        
         private ChildQuery path;
-        private Dictionary<string,IDisposable> observables;
+        private IDisposable observable;
 
         private HashSet<string> projectsSet;
         public ProjectControl()
         {
             path = App.root.Child("projects");
             InitializeComponent();
-            collections = new ObservableCollection<Projects>[5];
-            dictionaries= new Dictionary<string,Projects>[5];
-            observables = new Dictionary<string, IDisposable>();
+            collections = new AsyncObservableCollection<Projects>[5];
             for (int i = 0; i < 5; i++)
             {
                 collections[i] = new AsyncObservableCollection<Projects>();
-                dictionaries[i] = new Dictionary<string, Projects>();
             }
-            
-            /*
-            all = new AsyncObservableCollection<Projects>();
-            starred= new AsyncObservableCollection<Projects>();
-            onHold = new AsyncObservableCollection<Projects>();
-            stack= new AsyncObservableCollection<Projects>();
-            completed = new AsyncObservableCollection<Projects>();
-
-            allMap = new Dictionary<string, Projects>();
-            starredMap = new Dictionary<string, Projects>();
-            onHoldMap = new Dictionary<string, Projects>();
-            stackMap = new Dictionary<string, Projects>();
-            completedMap = new Dictionary<string, Projects>();
-            */
+            projectsSet = new HashSet<string>();
         }
         ~ProjectControl()
         {
+            collections = null;
             path.Dispose();
         }
 
+        public void getAll()
+        {
+            observable=path.AsObservable<Projects>().Subscribe(d =>
+            {
+                if (projectsSet.Contains(d.Object.name))
+                {
+                    if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                    {
+                        if (!collections[0].Contains(d.Object))
+                        {
+                            collections[0].Add(d.Object);
+                        }
+                    }
+                    else
+                    {
+                        collections[d.Object.state].Remove(d.Object);
+                        collections[0].Remove(d.Object);
+                    }
+                }
+            });
+        }
         public void insertOrUpdate(string project)
         {
-            Console.WriteLine(project+" AYA!");
-            observables.Add(project,path.OrderBy("name").EqualTo(project).AsObservable<Projects>().Subscribe(d =>
+            if (!projectsSet.Contains(project))
             {
-                ObservableCollection<Projects> referCollection = collections[d.Object.state];
-                Dictionary<string,Projects> referDict = dictionaries[d.Object.state];
-
-                if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
-                {
-                    Projects c;
-                    Console.WriteLine("FOr Project: " + project + " :" + d.Object.github + " :" + d.Object.state);
-                    Dispatcher.BeginInvoke(new Action(delegate
-                    {
-                        if (dictionaries[0].TryGetValue(project,out c))
-                        {
-                            
-                                Console.WriteLine("Idhar Hoon Mein");
-                            
-                                collections[c.state].Remove(c);
-                                dictionaries[c.state].Remove(project);
-
-                                collections[0].Remove(c);
-                                dictionaries[0].Remove(project);
-
-                                collections[0].Add(d.Object);
-                                dictionaries[0].Add(project, d.Object);
-
-                                collections[d.Object.state].Add(d.Object);
-                                dictionaries[d.Object.state].Add(project,d.Object);
-                            
-                    }else
-                    {
-                            Console.WriteLine("Idhar Hoon Mein3");
-                            collections[d.Object.state].Add(d.Object);
-                            dictionaries[d.Object.state].Add(project, d.Object);
-                            collections[0].Add(d.Object);
-                            dictionaries[0].Add(project, d.Object);
-                    }
-                    }));
-                }
-                else
-                {
-                    Dispatcher.BeginInvoke(new Action(delegate
-                    {
-                        Projects c;
-                    if(dictionaries[0].TryGetValue(project,out c))
-                    {
-
-                            collections[c.state].Remove(c);
-                            dictionaries[c.state].Remove(project);
-                            collections[0].Remove(c);
-                            dictionaries[0].Remove(project);
-                        
-                    }
-                    IDisposable obs;
-                    if(observables.TryGetValue(project, out obs)){
-                        obs.Dispose();
-                    }
-                }));
+                projectsSet.Add(project);
+            }
         }
-            }));
+        public void remove(string project)
+        {
+            projectsSet.Remove(project);
         }
     }
 }

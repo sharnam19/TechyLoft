@@ -170,8 +170,10 @@ namespace WpfApplication1
                 else
                 {
                     groupThreadsControls.delete(d.Object);
+                    projectControls.remove(d.Object);
                 }
             });
+            projectControls.getAll();
         }
     }
 }

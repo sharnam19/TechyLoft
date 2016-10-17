@@ -11,34 +11,26 @@ namespace WpfApplication1.TabControls
 {
     public partial class KanbanActivityControls : UserControl
     {
-        public ObservableCollection<Modules> closed { get; private set; }
-        public ObservableCollection<Modules> resolved { get; private set; }
-        public ObservableCollection<Modules> newmod { get; private set; }
-        public ObservableCollection<Modules> inprogress { get; private set; }
-        private Dictionary<string,Modules> newHashMap;
-        private Dictionary<string, Modules> inprogressHashMap;
-        private Dictionary<string, Modules> resolvedHashMap;
-        private Dictionary<string, Modules> closedHashMap;
+        
+        public static AsyncObservableCollection<Modules>[] collections { get; set; }
+        
         private IDisposable observable;
         private ChildQuery path;
         
         public KanbanActivityControls()
         {
-            newmod = new AsyncObservableCollection<Modules>();
-            inprogress = new AsyncObservableCollection<Modules>();
-            resolved = new AsyncObservableCollection<Modules>();
-            closed = new AsyncObservableCollection<Modules>();
+            collections = new AsyncObservableCollection<Modules>[5];
+            for(int i = 0; i < 5; i++)
+            {
+                collections[i] = new AsyncObservableCollection<Modules>();
+            }
 
             InitializeComponent();
             path = App.root.Child("modules");
-            
-            newHashMap = new Dictionary<string, Modules>();
-            inprogressHashMap = new Dictionary<string, Modules>();
-            resolvedHashMap = new Dictionary<string, Modules>();
-            closedHashMap = new Dictionary<string, Modules>();
+                        
             getData();
         }
-        
+        /*
         private void remove_AddItem(Dictionary<string,Modules> outDict,ObservableCollection<Modules> outClltn, Dictionary<string, Modules> inDict, ObservableCollection<Modules> inClltn, Modules outOb,Modules inOb,string key)
         {
             Console.WriteLine("Changed " + key);
@@ -71,7 +63,7 @@ namespace WpfApplication1.TabControls
             dict.Remove(key);
             clltn.Remove(inOb);
         }
-
+        */
         private delegate void Update();
 
         private void getData()
@@ -81,7 +73,11 @@ namespace WpfApplication1.TabControls
 
                         if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
                         {
-                            Modules val;
+                                if (!collections[0].Contains(d.Object))
+                                {
+                                    collections[0].Add(d.Object);
+                                }
+                           /* Modules val;
                             Dictionary<string,Modules> referDict= null;
                             ObservableCollection<Modules> referCollection = null;
                                 if (d.Object.status == "Closed")
@@ -114,9 +110,13 @@ namespace WpfApplication1.TabControls
                                     remove_AddItem(closedHashMap, closed, referDict, referCollection, val, d.Object, d.Key);
                                 else
                                     addItem(referDict, referCollection, d.Object, d.Key);
+                                */
                             }
                             else if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
                             {
+                                collections[0].Remove(d.Object);
+                                collections[d.Object.statusToIntTranslator()].Remove(d.Object);
+                                /*
                                 Console.WriteLine("Removed "+d.Key);
                                 Modules val2;
                                 if (newHashMap.TryGetValue(d.Key, out val2))
@@ -127,6 +127,7 @@ namespace WpfApplication1.TabControls
                                     removeItem(resolvedHashMap, resolved, val2, d.Key);
                                 else if (closedHashMap.TryGetValue(d.Key, out val2))
                                     removeItem(closedHashMap, closed, val2, d.Key);
+                                */
                             }
                         });
         }
