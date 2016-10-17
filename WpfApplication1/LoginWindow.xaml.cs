@@ -89,8 +89,9 @@ namespace WpfApplication1
                         if (user.Object.password == PasswordBox.Password)
                         {
                             Console.WriteLine("All PAss");
-                            LoggedInWindow Window = new LoggedInWindow(user.Object);
-                            Window.Show();
+                            user.Object.setKey(user.Key);
+                            ((App)Application.Current).user = user.Object;
+                            (new LoggedInWindow()).Show();
                             this.Close();
                         }else{
                             Console.WriteLine("Passwords Dont Match");
@@ -184,8 +185,10 @@ namespace WpfApplication1
                         gender = val
                     };
                     Console.WriteLine("All PAss");
-                    await path.PostAsync<User>(user);
-                    (new LoggedInWindow(user)).Show();
+                    var ob =await path.PostAsync<User>(user);
+                    ((App)Application.Current).user = user;
+                    user.setKey(ob.Key);
+                    (new LoggedInWindow()).Show();
                     this.Close();
                 }
             }else

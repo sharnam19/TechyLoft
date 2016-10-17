@@ -17,11 +17,9 @@ namespace WpfApplication1
     public partial class App : Application
     {
         public static FirebaseClient root = new FirebaseClient("https://dazzling-heat-1022.firebaseio.com/");
-
+        public User user;
         protected override void OnStartup(StartupEventArgs e)
         {
-            
-            
             // get the current app style (theme and accent) from the application
             // you can then use the current theme and custom accent instead set a new theme
             Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
@@ -31,10 +29,15 @@ namespace WpfApplication1
             ThemeManager.ChangeAppStyle(Application.Current,
                                        ThemeManager.GetAccent("CustomAccent1"),
                                         ThemeManager.GetAppTheme("BaseDark")); // or appStyle.Item1
-
             base.OnStartup(e);
         }
-        
-
+        public string getUserId()
+        {
+            return user.id;
+        }
+        public string getUserKey()
+        {
+            return user.getKey();
+        }
     }
 }

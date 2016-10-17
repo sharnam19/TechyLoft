@@ -5,15 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApplication1.TabControls"
              xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
-             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApplication1.TabControls.GroupThreadsControls"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" xmlns:WpfApplication1="clr-namespace:WpfApplication1" x:Class="WpfApplication1.TabControls.GroupThreadsControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="Team" Padding="15 0">
-            <Grid Background="Transparent"></Grid>
-        </TabItem>
-        <TabItem Header="General" Padding="15 0">
-            <Grid Background="Transparent"></Grid>
-        </TabItem>
-    </TabControl>
+    <TabControl Custom:TabControlHelper.IsUnderlined="True" Name="TabController"/>
 </UserControl>

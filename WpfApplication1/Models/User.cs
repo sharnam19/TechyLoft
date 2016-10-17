@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firebase.Database.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,17 @@ namespace WpfApplication1.Models
         public string password { get; set; }
         public string dob { get; set; }
         public char gender { get; set; }
-        public IDictionary<string, string> projects { get; set; }
+        
+        private string key;
+        public string getKey()
+        {
+            return key;
+        }
+        public void setKey(string key)
+        {
+            this.key = key;
+        }
+        
     }
+    
 }

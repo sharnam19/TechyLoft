@@ -96,6 +96,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AsyncObservableCollection.cs" />
+    <Compile Include="ChatDataTemplateSelector.cs" />
+    <Compile Include="ChatRoom.xaml.cs">
+      <DependentUpon>ChatRoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Documentation.xaml.cs">
       <DependentUpon>Documentation.xaml</DependentUpon>
     </Compile>
@@ -106,6 +110,8 @@
       <DependentUpon>LoggedInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Functions.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\ProjectForChat.cs" />
     <Compile Include="Models\Projects.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="TabControls\AnalyticsControls.xaml.cs">
@@ -129,9 +135,10 @@
     <Compile Include="TabControls\UsersControl.xaml.cs">
       <DependentUpon>UsersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tabs.xaml.cs">
-      <DependentUpon>Tabs.xaml</DependentUpon>
-    </Compile>
+    <Page Include="ChatRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomAccents\CustomAccents1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,10 +192,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TabControls\UsersControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

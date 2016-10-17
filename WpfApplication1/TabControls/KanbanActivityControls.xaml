@@ -11,17 +11,29 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="ModuleView">
-            <Grid Background="#CF000000" Margin="15 10" MinHeight="150" MinWidth="200" MaxWidth="200" MaxHeight="150" Cursor="Hand" ToolTip="View Documentation" MouseLeftButtonDown="ClickHandler" MouseRightButtonDown="ClickHandler">
+            <Grid Background="#CF000000" Margin="15 10" MinHeight="150" MinWidth="200" MaxWidth="300" MaxHeight="150" Cursor="Hand" ToolTip="View Documentation" MouseLeftButtonDown="ClickHandler" MouseRightButtonDown="ClickHandler">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="ModuleName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="0" FontSize="13" FontWeight="Bold" Text="{Binding name}" />
-                <TextBlock x:Name="ProjectName" Margin="10"  Foreground="White" TextAlignment="Center" Grid.Row="1" FontSize="13" FontWeight="Bold" Text="{Binding project}"/>
-                <TextBlock x:Name="Type" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="2" FontSize="13" FontWeight="Bold" Text="{Binding type}"/>
-                <TextBlock x:Name="UserName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="3" FontSize="13" FontWeight="Bold" Text="{Binding user_id}"/>
+                <TextBlock x:Name="ModuleName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="0" FontSize="13" FontWeight="Bold">
+                    <Run Text="Name: "/>
+                    <Run Text="{Binding name}"/>
+                </TextBlock>
+                <TextBlock x:Name="ProjectName" Margin="10"  Foreground="White" TextAlignment="Center" Grid.Row="1" FontSize="13" FontWeight="Bold">
+                    <Run Text="Project: "/>
+                    <Run Text="{Binding project}"/>
+                </TextBlock>
+                <TextBlock x:Name="Type" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="2" FontSize="13" FontWeight="Bold">
+                <Run Text="Type: "/>
+                <Run Text="{Binding Type}"/>
+                </TextBlock>
+                <TextBlock x:Name="UserName" Margin="10" Foreground="White" TextAlignment="Center" Grid.Row="3" FontSize="13" FontWeight="Bold">
+                    <Run Text="User:"/>
+                    <Run Text="{Binding user_id}"/>
+                </TextBlock>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

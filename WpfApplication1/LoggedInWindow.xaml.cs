@@ -28,6 +28,15 @@ namespace WpfApplication1
         private User user;
         private ActiveTab activeTab;
         private FirebaseClient path;
+        private AnalyticsControls analyticsControls;
+        private DashboardControl dashboardControls;
+        private GroupThreadsControls groupThreadsControls;
+        private KanbanActivityControls kanbanActivityControls;
+        private ProjectControl projectControls;
+        private TasksControls tasksControls;
+        private UsersControl usersControls;
+
+        private IDisposable projectsObservable;
 
         enum ActiveTab
         {
@@ -40,16 +49,24 @@ namespace WpfApplication1
             Analytics
         };
 
-        public LoggedInWindow(User user)
+        public LoggedInWindow()
         {
             path = App.root;
-            this.user = user;
+            user = ((App)Application.Current).user;
             InitializeComponent();
             this.Title = "Welcome " + user.name + " to TechyLoft!";
             this.SizeChanged += MainWindow_SizeChanged;
-            this.ContentController.Content = new DashboardControl();
+            dashboardControls = new DashboardControl();
+            groupThreadsControls= new GroupThreadsControls();
+            projectControls = new ProjectControl();
+            this.ContentController.Content = dashboardControls;
             this.activeTab = ActiveTab.Dashboard;
             this.Background= new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/WpfApplication1;component/Images/icon.jpg")));
+            getProjects();
+        }
+        ~LoggedInWindow()
+        {
+            projectsObservable.Dispose();
         }
 
         void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -87,84 +104,47 @@ namespace WpfApplication1
                 switch (tab)
                 {
                     case ActiveTab.Dashboard:
-                        this.ContentController.Content = new DashboardControl();
+                        if (dashboardControls == null)
+                            dashboardControls = new DashboardControl();
+                        this.ContentController.Content = dashboardControls;
                         break;
                     case ActiveTab.Projects:
-                        this.ContentController.Content = new ProjectControl();
+                        if (projectControls == null)
+                            projectControls = new ProjectControl();
+                        this.ContentController.Content = projectControls;
                         break;
                     case ActiveTab.Tasks:
-                        this.ContentController.Content = new TasksControls();
+                        if (tasksControls == null)
+                            tasksControls = new TasksControls();
+                        this.ContentController.Content = tasksControls;
                         break;
                     case ActiveTab.Users:
-                        this.ContentController.Content = new UsersControl();
+                        if (usersControls== null)
+                            usersControls = new UsersControl();
+                        this.ContentController.Content = usersControls;
                         break;
                     case ActiveTab.KanbanActivity:
-                        this.ContentController.Content = new KanbanActivityControls();
+                        if (kanbanActivityControls== null)
+                            kanbanActivityControls= new KanbanActivityControls();
+                        this.ContentController.Content = kanbanActivityControls;
                         break;
                     case ActiveTab.GroupThread:
-                        this.ContentController.Content = new GroupThreadsControls();
+                        if (groupThreadsControls== null)
+                            groupThreadsControls = new GroupThreadsControls();
+                        this.ContentController.Content = groupThreadsControls;
                         break;
                     case ActiveTab.Analytics:
-                        this.ContentController.Content = new AnalyticsControls();
+                        if (analyticsControls== null)
+                            analyticsControls = new AnalyticsControls();
+                        this.ContentController.Content = analyticsControls ;
                         break;
-                }
-            }
-            if (e.OriginalSource == DashboardButton)
-            {
-                if (activeTab != ActiveTab.Dashboard)
-                {
-                    this.ContentController.Content = new DashboardControl();
-                    this.activeTab = ActiveTab.Dashboard;
-                }
-            }else if (e.OriginalSource == ProjectsButton)
-            {
-                if (activeTab != ActiveTab.Projects)
-                {
-                    this.ContentController.Content = new ProjectControl();
-                    this.activeTab = ActiveTab.Projects;
-                }
-            }else if (e.OriginalSource == TasksButton)
-            {
-                if (activeTab != ActiveTab.Tasks)
-                {
-                    this.ContentController.Content = new TasksControls();
-                    this.activeTab = ActiveTab.Tasks;
-                }
-            }else if (e.OriginalSource == UsersButton)
-            {
-                if (activeTab != ActiveTab.Users)
-                {
-                    this.ContentController.Content = new UsersControl();
-                    this.activeTab = ActiveTab.Users;
-                }
-            }else if (e.OriginalSource == KanbanActivityButton)
-            {
-                if (activeTab != ActiveTab.KanbanActivity)
-                {
-                    this.ContentController.Content = new KanbanActivityControls();
-                    this.activeTab = ActiveTab.KanbanActivity;
-                }
-            }
-            else if (e.OriginalSource == GroupThreadsButton)
-            {
-                if (activeTab != ActiveTab.GroupThread)
-                {
-                    this.ContentController.Content = new GroupThreadsControls();
-                    this.activeTab = ActiveTab.GroupThread;
-                }
-            }
-            else if (e.OriginalSource == this.AnalyticsButton)
-            {
-                if (activeTab != ActiveTab.Analytics)
-                {
-                    this.ContentController.Content = new AnalyticsControls();
-                    this.activeTab = ActiveTab.Analytics;
                 }
             }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
+            ((App)Application.Current).user = null;
             (new LoginWindow()).Show();
             this.Close();
         }
@@ -177,6 +157,21 @@ namespace WpfApplication1
             }else if(((TextBlock)sender).Text.Equals("User")){
                 Console.WriteLine("User Created");
             }
+        }
+
+        public void getProjects()
+        {
+            projectsObservable = App.root.Child("userprojects").Child(((App)Application.Current).getUserKey()).AsObservable<string>().Subscribe(d => {
+                if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                {
+                    groupThreadsControls.insertOrUpdate(d.Object);
+                    projectControls.insertOrUpdate(d.Object);
+                }
+                else
+                {
+                    groupThreadsControls.delete(d.Object);
+                }
+            });
         }
     }
 }

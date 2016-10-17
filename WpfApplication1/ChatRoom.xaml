@@ -1,0 +1,64 @@
+﻿<TabItem
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1"
+             x:Class="WpfApplication1.ChatRoom"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:shard="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"   
+             Style="{StaticResource MetroTabItem}" 
+             mc:Ignorable="d"
+             Padding="15 0"
+             d:DesignWidth="264.841" d:DesignHeight="111.349">
+    <TabItem.Resources>
+        <DataTemplate x:Key="MyMessage">
+            <TextBlock Foreground="White" Padding="10" Background="#CF000000" Margin="10" HorizontalAlignment="Right" MaxWidth="{Binding ActualWidth, ConverterParameter=0.7, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                <Run Text="From: " FontSize="14"/>
+                <Run Text="{Binding author}" FontSize="14"/>
+                <LineBreak/>
+                <Run Text="{Binding content}" FontSize="16"/>
+                <LineBreak/>
+                <Run Text="At: " FontSize="12"/>
+                <Run Text="{Binding timestamp}" FontSize="12"/>
+            </TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="OtherMessage">
+            <TextBlock Foreground="White" Padding="10" TextWrapping="Wrap"  Background="#CF000000" Margin="10" HorizontalAlignment="Left" MaxWidth="{Binding ActualWidth, ConverterParameter=0.7, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                <Run Text="From: " FontSize="14"/>
+                <Run Text="{Binding author}" FontSize="14"/>
+                <LineBreak/>
+                <Run Text="{Binding content}" FontSize="16"/>
+                <LineBreak/>
+                <Run Text="At: " FontSize="12"/>
+                <Run Text="{Binding timestamp}" FontSize="12"/>
+            </TextBlock>
+        </DataTemplate>
+        <local:ChatDataTemplateSelector x:Key="templateSelector"
+              MyMessageDataTemplate="{StaticResource MyMessage}" 
+              OtherMessageDataTemplate="{StaticResource OtherMessage}"/>
+    </TabItem.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Margin="0,0,0,0" Background="Transparent" ScrollChanged="ScrollViewer_ScrollChanged">
+            <ItemsControl ItemsSource="{Binding messages, IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}}" ItemTemplateSelector="{StaticResource templateSelector}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="ContentBox" TextWrapping="Wrap"/>
+            <Button Grid.Column="1" Margin="5,0,0,0" Content="Send" Click="Send"/>
+        </Grid>
+    </Grid>
+</TabItem>

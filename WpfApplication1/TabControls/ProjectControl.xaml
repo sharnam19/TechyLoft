@@ -8,21 +8,75 @@
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApplication1.TabControls.ProjectControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProjectView">
+            <TextBlock TextWrapping="Wrap" Background="#CF000000" Padding="15" Margin="10">
+                <Run Text="Github Link: "/>
+                <Run Text="{Binding github}"/>
+                <LineBreak/>
+                <Run Text="Project Name: "/>
+                <Run Text="{Binding name}"/>
+                <LineBreak/>
+                <Run Text="Total Users: "/>
+                <Run Text="{Binding count}"/>
+            </TextBlock>
+        </DataTemplate>
+    </UserControl.Resources>
     <TabControl Custom:TabControlHelper.IsUnderlined="True" >
-        <TabItem Header="All" Padding="15 0" >
-            <Grid Background="Transparent"></Grid>
+        <TabItem Header="All" Padding="15 0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[0], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProjectControl}}}" ItemTemplate="{StaticResource ProjectView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="Starred" Padding="15 0" >
-            <Grid Background="Transparent"></Grid>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[1], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProjectControl}}}" ItemTemplate="{StaticResource ProjectView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="On Hold" Padding="15 0">
-            <Grid Background="Transparent"></Grid>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[2], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProjectControl}}}" ItemTemplate="{StaticResource ProjectView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="Stack" Padding="15 0">
-            <Grid Background="Transparent"></Grid>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[3], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProjectControl}}}" ItemTemplate="{StaticResource ProjectView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="Completed" Padding="15 0">
-            <Grid Background="Transparent"></Grid>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding collections[4], IsAsync=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProjectControl}}}" ItemTemplate="{StaticResource ProjectView}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

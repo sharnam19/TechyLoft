@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -36,12 +37,8 @@ namespace WpfApplication1.TabControls
             resolvedHashMap = new Dictionary<string, Modules>();
             closedHashMap = new Dictionary<string, Modules>();
             getData();
-
         }
-        ~KanbanActivityControls()
-        {
-            observable.Dispose();
-        }
+        
         private void remove_AddItem(Dictionary<string,Modules> outDict,ObservableCollection<Modules> outClltn, Dictionary<string, Modules> inDict, ObservableCollection<Modules> inClltn, Modules outOb,Modules inOb,string key)
         {
             Console.WriteLine("Changed " + key);
@@ -79,7 +76,7 @@ namespace WpfApplication1.TabControls
 
         private void getData()
         {
-            observable = path.OrderBy("user_id").EqualTo("sharnam12").AsObservable<Modules>()
+            observable = path.OrderBy("user_id").EqualTo(((App)Application.Current).getUserId()).AsObservable<Modules>()
                         .Subscribe(d => {
 
                         if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
